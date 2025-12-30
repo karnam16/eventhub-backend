@@ -9,20 +9,23 @@ const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
 
-/* -------------------- CORS -------------------- */
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",          // local frontend
-      "https://eventhub.vercel.app",    // deployed frontend (change if needed)
+      "http://localhost:5173",
+      "https://eventhub-frontend-theta.vercel.app",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
+app.options("*", cors());
+
+
 app.use(express.json());
 
-/* -------------------- ROUTES -------------------- */
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 
@@ -37,7 +40,7 @@ app.get("/", (req, res) => {
   res.send("HELLO FROM EXPRESS SERVER");
 });
 
-/* -------------------- DB + SERVER -------------------- */
+
 const PORT = process.env.PORT || 3000;
 
 mongoose
