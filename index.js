@@ -15,14 +15,9 @@ app.use(
       "http://localhost:5173",
       "https://eventhub-frontend-theta.vercel.app",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
-
-app.options("*", cors());
-
 
 app.use(express.json());
 
@@ -39,7 +34,6 @@ app.get("/api/protected", authMiddleware, (req, res) => {
 app.get("/", (req, res) => {
   res.send("HELLO FROM EXPRESS SERVER");
 });
-
 
 const PORT = process.env.PORT || 3000;
 
